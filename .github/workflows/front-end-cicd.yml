@@ -21,5 +21,5 @@ jobs:
           aws-region: 'us-east-1'
       
       - name: Deploy to S3
-        run: aws s3 sync ./my website/ s3://my-moaffordables-website
+        run: aws s3 sync "./my website/" s3://my-moaffordables-website
 
