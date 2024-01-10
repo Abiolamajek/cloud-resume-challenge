@@ -21,4 +21,4 @@ jobs:
           aws-region: 'us-east-1'
       
       - name: Deploy to S3
-        run: aws s3 sync ./my website/ my-moaffordables-website
+        run: aws s3 sync ./my website/ https://s3.console.aws.amazon.com/s3/buckets/my-moaffordables-website?region=us-east-1&tab=objects
