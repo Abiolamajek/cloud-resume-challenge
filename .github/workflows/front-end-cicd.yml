@@ -1,22 +1,24 @@
-name: Upload website to S3
+name: Deploy Frontend to S3
 
 on:
   push:
     branches:
-      - main
+      - main  # Modify this according to your branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # You can change the runner as needed
+
     steps:
-      - uses: actions/checkout@master
-      - uses: jakejarvis/s3-sync-action@master
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
-          AWS_PROFILE: 'jola'
-          SOURCE_DIR: 'my website'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+      
+      - name: Deploy to S3
+        run: aws s3 sync ./website/ s3://my-moaffordables-website
